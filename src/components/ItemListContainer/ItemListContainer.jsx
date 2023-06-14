@@ -1,18 +1,44 @@
-import React from 'react'
+import * as React from 'react';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
+import data from '../../Data/Data.json'
+import "./ItemListContainer.css"
+import { Link } from 'react-router-dom';
 
-const ItemListContainer = ({greeting}) => {
-  return (
-    <div>
-    <div>
-        <p>Mensaje:{greeting}</p>
-    </div>
-    <div>Otro mensaje para probar algo: Prefiero typear lo menos posible en App.jsx porque lo deja mas desprolijo, 
-        por otro lado entiendo que la idea seria tener muchos componentes y que todos le envien info al App y que luego App renderice la vista, 
-        entonces no me gusta mandar cosas desde app hacia los componentes. Estoy equivocado en pensar asi?
-        Por otro lado, estamos trayendo greeting desde app sin importar el archivo app acá pero no podemos llevar info de aca hacia app si no importamos este archivo desde app, por que?
-        </div>
-    </div>
-  )
-}
 
-export default ItemListContainer
+const Cards = () => {
+    return (
+        <>
+            <h1>Esta es la Home!</h1>
+            <div className='Cards-Container'>
+                {data.map((proyecto) => (
+                    <Card key={proyecto.id}>
+                        <Link to={`item/${proyecto.id}`} className='Card-Link'>
+                            <CardActionArea>
+                                <CardMedia
+                                    className='Cards-Image'
+                                    component="img"
+                                    image={proyecto.foto}
+                                    alt={proyecto.nombre}
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        Titulo: {proyecto.nombre}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        {proyecto.descripcion}
+                                    </Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Link>
+                    </Card>
+                ))}
+            </div>
+        </>
+    );
+};
+
+export default Cards;

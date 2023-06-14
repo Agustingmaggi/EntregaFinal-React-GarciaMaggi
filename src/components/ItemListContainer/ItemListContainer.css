@@ -1,0 +1,15 @@
+.Cards-Container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.Cards-Image {
+    height: 200px;
+    max-width: 300px;
+}
+
+.Card-Link {
+    text-decoration: none;
+    color: inherit
+}

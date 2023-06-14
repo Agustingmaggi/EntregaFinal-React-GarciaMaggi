@@ -1,37 +1,40 @@
 import React from 'react'
-import '../../public/css/NavBar.css'
+import './NavBar.css'
 import CardWidget from '../CardWidget/CardWidget.jsx'
+import { Link } from "react-router-dom"
+import BasicSelect from '../BasicSelect/BasicSelect.jsx';
 
 const NavBar = () => {
   return (
-   
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="index.html">Go Fund Them!</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <div className="container-fluid">
+        <Link className="navbar-brand" to="/">Go Fund Them!</Link>
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href='#'>Nuestra Visión</a>
+        <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/vision">Nuestra Visión</Link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Crea tu Proyecto</a>
+            <li className="nav-item">
+              <Link className="nav-link" to="CreaTuProyecto">Crea tu Proyecto</Link>
             </li>
+            <BasicSelect />
           </ul>
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Ingresa</a>
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="Ingresa">Ingresa</Link>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Registrate</a>
+            <li className="nav-item">
+              <Link className="nav-link" to="Registrate">Registrate</Link>
             </li>
           </ul>
         </div>
       </div>
       <div className='cardwidget'>
-      <CardWidget />
+        <CardWidget />
       </div>
     </nav>
   )
