@@ -1,53 +1,46 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import data from '../../Data/Data.json';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import './Detail.css';
+import React, { useState, useEffect } from "react"
+import { useParams } from "react-router-dom"
+import CardPlayer from '../../components/CardPlayer/CardPlayer.jsx'
+import './detail.css'
+
+import {
+    collection, query, where, getDocs, documentId,
+} from "firebase/firestore"
+import { db } from "../../firebase/firebaseConfig"
 
 const DetailPage = () => {
-    const { id } = useParams();
+    const [producto, setProducto] = useState([])
+    const { id } = useParams()
 
-    // Convertir el id a un número
-    const itemId = parseInt(id);
+    useEffect(() => {
+        const getproductos = async () => {
+            const q = query(
+                collection(db, "productos"),
+                where(documentId(), "==", id)
+            )
+            const docs = []
+            const querySnapshot = await getDocs(q)
 
-    // Filtrar los elementos en data que coincidan con el id
-    const filteredItems = data.filter(item => item.id === itemId);
-
-    if (filteredItems.length === 0) {
-        return <div>No se encontró el elemento con el ID proporcionado</div>;
-    }
-
-    const item = filteredItems[0];
+            querySnapshot.forEach((doc) => {
+                docs.push({ ...doc.data(), id: doc.id })
+            })
+            setProducto(docs)
+        }
+        getproductos()
+    }, [id])
 
     return (
-        <>
-            <h1>Detalle del proyecto!</h1>
-            <div className='Cards-Container'>
-                <Card key={item.id}>
-                    <CardActionArea>
-                        <CardMedia
-                            className='Cards-Image'
-                            component="img"
-                            image={item.foto}
-                            alt={item.nombre}
-                        />
-                        <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                Titulo: {item.nombre}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                {item.descripcion}
-                            </Typography>
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
-            </div>
-        </>
-    );
-};
+        <div className="detalle-prod">
+            {producto.map((prod) => {
+                return (
+                    <div key={prod.id}>
+                        <CardPlayer data={prod} />
+                    </div>
+                )
+            }
+            )}
+        </div>
+    )
+}
 
-export default DetailPage;
+export default DetailPage

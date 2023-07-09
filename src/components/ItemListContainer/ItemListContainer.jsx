@@ -1,44 +1,43 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
-import data from '../../Data/Data.json'
-import "./ItemListContainer.css"
 import { Link } from 'react-router-dom';
+import "./ItemListContainer.css"
 
+import { useEffect, useState } from "react"
+import CardPlayer from '../CardPlayer/CardPlayer.jsx'
+//Firebase
+import { db } from '../../firebase/firebaseConfig'
+import { collection, query, getDocs } from 'firebase/firestore'
 
 const Cards = () => {
+    const [producto, setProducto] = useState([])
+
+    useEffect(() => {
+        const getproductos = async () => {
+            const q = query(collection(db, "productos"))
+            const docs = []
+            const querySnapshot = await getDocs(q)
+
+            querySnapshot.forEach((doc) => {
+                docs.push({ ...doc.data(), id: doc.id })
+            })
+            setProducto(docs)
+        }
+        getproductos()
+    }, [])
     return (
-        <>
-            <h1>Esta es la Home!</h1>
-            <div className='Cards-Container'>
-                {data.map((proyecto) => (
-                    <Card key={proyecto.id}>
-                        <Link to={`item/${proyecto.id}`} className='Card-Link'>
-                            <CardActionArea>
-                                <CardMedia
-                                    className='Cards-Image'
-                                    component="img"
-                                    image={proyecto.foto}
-                                    alt={proyecto.nombre}
-                                />
-                                <CardContent>
-                                    <Typography gutterBottom variant="h5" component="div">
-                                        Titulo: {proyecto.nombre}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        {proyecto.descripcion}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
+        <div className='Cards-Container'>
+            {producto.map((prod) => {
+                return (
+                    <div className='Cards-Image' key={prod.id}>
+                        <Link to={`/detail/${prod.id}`}
+                            style={{ textDecoration: "none" }}>
+                            <CardPlayer data={prod} />
                         </Link>
-                    </Card>
-                ))}
-            </div>
-        </>
-    );
-};
+                    </div>
+                )
+            })}
+        </div>
+    )
+}
 
 export default Cards;

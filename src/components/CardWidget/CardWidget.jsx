@@ -4,8 +4,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 const CardWidget = () => {
   return (
     <div>
-       < ShoppingCartIcon />
-        <p>11</p>
+      < ShoppingCartIcon />
     </div>
   )
 }
