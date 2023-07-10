@@ -19,6 +19,7 @@ const DetailPage = () => {
     const [cantidad, setCantidad] = useState(0);
     const [mensajeCarrito, setMensajeCarrito] = useState(null);
     const [carritoClicked, setCarritoClicked] = useState(false);
+    const [loading, setLoading] = useState(true); // Bandera de carga
 
     useEffect(() => {
         const getproductos = async () => {
@@ -30,6 +31,7 @@ const DetailPage = () => {
                 docs.push({ ...doc.data(), id: doc.id });
             });
             setProducto(docs);
+            setLoading(false); // Actualizar la bandera de carga
         };
         getproductos();
     }, [id]);
@@ -65,6 +67,22 @@ const DetailPage = () => {
             setMensajeCarrito("Tienes que agregar al carrito al menos 1 producto.");
         }
     };
+
+    if (loading) {
+        return (
+            <div className="detalle-prod">
+                <p>Cargando...</p>
+            </div>
+        );
+    }
+
+    if (producto.length === 0) {
+        return (
+            <div className="detalle-prod">
+                <p>Lo sentimos, ese producto no existe.</p>
+            </div>
+        );
+    }
 
     return (
         <div className="detalle-prod">
