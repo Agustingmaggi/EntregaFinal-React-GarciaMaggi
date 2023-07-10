@@ -1,6 +1,6 @@
 # Hola!
 
-## Bienvenidos a mi proyecto inicial de React.
+## Bienvenidos a mi proyecto final de React.
 
 ### El objetivo de este sencillo proyecto es poner en practica lo estudiado en el curso de React de Coder House. Para esto utilizamos las siguientes herramientas:
 + Mui para todo lo que es el diseño de los distintos componentes e iconos.
