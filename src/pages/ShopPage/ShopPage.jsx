@@ -1,38 +1,39 @@
-import React, { useState, useEffect } from "react"
-import TextField from "@mui/material/TextField"
-import { collection, addDoc } from "firebase/firestore"
-import { db } from "../../firebase/firebaseConfig"
+import React, { useContext, useState } from "react";
+import TextField from "@mui/material/TextField";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebaseConfig";
+import { ProductosContext } from "../../context/ProductosContext";
 import MensajeExito from "../../components/MensajeExito/MensajeExito"
-
 
 const initialState = {
     nombre: "",
     email: "",
     emailx2: ""
-}
-
+};
 
 const ShopPage = () => {
-    const [values, setValues] = useState(initialState)
-    const [idCompra, setidCompra] = useState(null)
+    const [values, setValues] = useState(initialState);
+    const [idCompra, setidCompra] = useState(null);
+    const [items, setItems] = useContext(ProductosContext);
 
     const handleOnChange = (e) => {
-        const { value, name } = e.target
-        setValues({ ...values, [name]: value })
-    }
+        const { value, name } = e.target;
+        setValues({ ...values, [name]: value });
+    };
 
     const onSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
         const docRef = await addDoc(collection(db, "Compra"), {
             values,
-        })
-        // console.log("Document written with ID: ", docRef.id)
-        setidCompra(docRef.id)
-        setValues(initialState)
-    }
+        });
+        setidCompra(docRef.id);
+        setValues(initialState);
+        setItems([]); // Reiniciar el carrito estableciéndolo en un estado inicial vacío
+    };
 
     return (
-        <div>ShopPage
+        <div>
+            <h2>ShopPage</h2>
             <form className="FormContainer" onSubmit={onSubmit}>
                 <TextField
                     placeholder="Nombre"
@@ -58,8 +59,9 @@ const ShopPage = () => {
                 <button className="boton">Enviar</button>
             </form>
             {idCompra ? <MensajeExito idCompra={idCompra} /> : null}
-        </div>
-    )
-}
 
-export default ShopPage
+        </div>
+    );
+};
+
+export default ShopPage;

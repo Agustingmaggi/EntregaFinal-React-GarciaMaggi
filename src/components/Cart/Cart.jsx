@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { ProductosContext } from "../../context/ProductosContext";
+import { Link } from 'react-router-dom';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Cart = () => {
     const [items] = useContext(ProductosContext); // Obtén el estado del contexto
@@ -15,6 +17,9 @@ const Cart = () => {
                     <p>Cantidad: {item.cantidad}</p>
                 </div>
             ))}
+            <Link to="/shop">
+                <button>Finalizar Compra</button>
+            </Link>
         </div>
     );
 };

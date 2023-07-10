@@ -1,11 +1,14 @@
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import Menu from '../MenuNavBar/MenuNavBar.jsx';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useContext } from "react"
-import { ProductosContext } from "../../context/ProductosContext.jsx"
+import { ProductosContext } from "../../context/ProductosContext.jsx";
 
 const NavBar = () => {
-    const [items] = useContext(ProductosContext)
+    const [items] = useContext(ProductosContext);
+
+    // Calcular la cantidad total de productos en el carrito
+    const totalQuantity = items.reduce((total, item) => total + item.cantidad, 0);
 
     return (
         <>
@@ -20,15 +23,14 @@ const NavBar = () => {
                         <li><Link style={{ textDecoration: 'none', color: 'white' }} to="/contact">Contact</Link></li>
                     </ul>
                     <Link style={{ textDecoration: 'none', color: 'white' }} to="/cart">
-                        < ShoppingCartIcon />
-                        {items.length}
+                        <ShoppingCartIcon />
+                        {totalQuantity}
                     </Link>
                 </div>
-            </nav >
-            <div style={{ marginTop: '60px' }}>
-            </div>
+            </nav>
+            <div style={{ marginTop: '60px' }}></div>
         </>
-    )
+    );
 }
 
 export default NavBar;
