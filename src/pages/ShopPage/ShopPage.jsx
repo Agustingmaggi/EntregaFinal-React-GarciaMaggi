@@ -4,7 +4,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebaseConfig";
 import { ProductosContext } from "../../context/ProductosContext";
 import MensajeExito from "../../components/MensajeExito/MensajeExito";
-import "./ShopPage.css"
+import "./ShopPage.css";
 
 const initialState = {
     nombre: "",
@@ -30,7 +30,8 @@ const ShopPage = () => {
         if (values.nombre && values.email && values.emailx2) {
             setButtonPressed(true);
             const docRef = await addDoc(collection(db, "Compra"), {
-                values
+                ...values,
+                items
             });
             setidCompra(docRef.id);
             setValues(initialState);

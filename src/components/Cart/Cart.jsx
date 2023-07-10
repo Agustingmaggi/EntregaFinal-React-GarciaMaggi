@@ -1,21 +1,26 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ProductosContext } from "../../context/ProductosContext";
 import { Link } from 'react-router-dom';
 import './Cart.css';
 
 const Cart = () => {
     const [items, setItems] = useContext(ProductosContext);
+    const [cartData, setCartData] = useState([]);
 
-    const groupedItems = items.reduce((grouped, item) => {
-        if (!grouped[item.nombre]) {
-            grouped[item.nombre] = { ...item };
-        } else {
-            grouped[item.nombre].cantidad += item.cantidad;
-        }
-        return grouped;
-    }, {});
+    useEffect(() => {
+        const groupedItems = items.reduce((grouped, item) => {
+            if (!grouped[item.nombre]) {
+                grouped[item.nombre] = { ...item };
+            } else {
+                grouped[item.nombre].cantidad += item.cantidad;
+            }
+            return grouped;
+        }, {});
 
-    const totalPrice = Object.values(groupedItems).reduce((total, item) => total + item.cantidad * item.precio, 0);
+        setCartData(Object.values(groupedItems));
+    }, [items]);
+
+    const totalPrice = cartData.reduce((total, item) => total + item.cantidad * item.precio, 0);
 
     const removeFromCart = (nombre) => {
         const updatedItems = items.filter(item => item.nombre !== nombre);
@@ -25,9 +30,9 @@ const Cart = () => {
     return (
         <div className="cart-container">
             <h2>Carrito de compras</h2>
-            {Object.values(groupedItems).length > 0 ? (
+            {cartData.length > 0 ? (
                 <>
-                    {Object.values(groupedItems).map((item) => (
+                    {cartData.map((item) => (
                         <div className="cart-item" key={item.nombre}>
                             <img src={item.img} alt={item.nombre} />
                             <div className="cart-item-details">
@@ -43,7 +48,10 @@ const Cart = () => {
                         </div>
                     ))}
                     <p className="cart-total">Precio Total del Carrito: $ {totalPrice}</p>
-                    <Link to="/shop">
+                    <Link to={{
+                        pathname: "/shop",
+                        state: { cartData: cartData } // Pasar cartData como prop en el estado de la ubicación
+                    }}>
                         <button className="finish-purchase">Finalizar Compra</button>
                     </Link>
                 </>
