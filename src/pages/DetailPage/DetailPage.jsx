@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import CardPlayer from '../../components/CardPlayer/CardPlayer.jsx';
-import './detail.css';
+import CardPlayer from "../../components/CardPlayer/CardPlayer.jsx";
+import "./detail.css";
 import { ProductosContext } from "../../context/ProductosContext";
 import {
     collection,
@@ -15,15 +15,14 @@ import { db } from "../../firebase/firebaseConfig";
 const DetailPage = () => {
     const [producto, setProducto] = useState([]);
     const { id } = useParams();
-    const [items, setItems] = useContext(ProductosContext); // Obtén el estado del contexto
+    const [items, setItems] = useContext(ProductosContext);
     const [cantidad, setCantidad] = useState(0);
+    const [mensajeCarrito, setMensajeCarrito] = useState(null);
+    const [carritoClicked, setCarritoClicked] = useState(false);
 
     useEffect(() => {
         const getproductos = async () => {
-            const q = query(
-                collection(db, "productos"),
-                where(documentId(), "==", id)
-            );
+            const q = query(collection(db, "productos"), where(documentId(), "==", id));
             const docs = [];
             const querySnapshot = await getDocs(q);
 
@@ -31,7 +30,6 @@ const DetailPage = () => {
                 docs.push({ ...doc.data(), id: doc.id });
             });
             setProducto(docs);
-
         };
         getproductos();
     }, [id]);
@@ -47,17 +45,25 @@ const DetailPage = () => {
     };
 
     const agregarAlCarrito = () => {
-        const productoSeleccionado = producto[0];
-        const itemCarrito = {
-            img: productoSeleccionado.img,
-            clasificacion: productoSeleccionado.clasificacion,
-            nombre: productoSeleccionado.nombre,
-            precio: productoSeleccionado.precio,
-            cantidad: cantidad,
-        };
-        // console.log(agregarAlCarrito)
+        if (cantidad > 0) {
+            const productoSeleccionado = producto[0];
+            const itemCarrito = {
+                img: productoSeleccionado.img,
+                clasificacion: productoSeleccionado.clasificacion,
+                nombre: productoSeleccionado.nombre,
+                precio: productoSeleccionado.precio,
+                cantidad: cantidad,
+            };
+            setItems((prevItems) => [...prevItems, itemCarrito]);
+            setMensajeCarrito(`¡Enhorabuena! Has agregado este producto al carrito`);
+            setCarritoClicked(true);
 
-        setItems((prevItems) => [...prevItems, itemCarrito]);
+            setTimeout(() => {
+                setCarritoClicked(false);
+            }, 100);
+        } else {
+            setMensajeCarrito("Tienes que agregar al carrito al menos 1 producto.");
+        }
     };
 
     return (
@@ -65,14 +71,23 @@ const DetailPage = () => {
             {producto.map((prod) => {
                 return (
                     <div className="detalle-prodd" key={prod.id}>
-                        <CardPlayer data={prod} />
+                        <CardPlayer data={prod} showDescription={true} />
 
                         <div className="cantidad-container">
                             <button onClick={decrementarCantidad}>-</button>
                             <span>{cantidad}</span>
                             <button onClick={incrementarCantidad}>+</button>
-                            <button onClick={() => agregarAlCarrito()}>Agregar al carrito</button>
+                            <button
+                                onClick={() => agregarAlCarrito()}
+                                className={carritoClicked ? "button-clicked" : ""}
+                            >
+                                Agregar al carrito
+                            </button>
                         </div>
+
+                        {mensajeCarrito && (
+                            <p className="mensaje-carrito">{mensajeCarrito}</p>
+                        )}
                     </div>
                 );
             })}

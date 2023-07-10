@@ -1,6 +1,6 @@
 .Cards-Container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 50px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
     margin: 20px;
 }

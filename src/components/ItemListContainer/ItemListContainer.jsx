@@ -29,9 +29,8 @@ const Cards = () => {
             {producto.map((prod) => {
                 return (
                     <div className='Cards-Image' key={prod.id}>
-                        <Link to={`/detail/${prod.id}`}
-                            style={{ textDecoration: "none" }}>
-                            <CardPlayer data={prod} />
+                        <Link to={`/detail/${prod.id}`} style={{ textDecoration: "none" }}>
+                            <CardPlayer data={prod} showDescription={false} />
                         </Link>
                     </div>
                 )
