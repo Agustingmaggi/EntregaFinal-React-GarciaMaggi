@@ -31,7 +31,7 @@ const DetailPage = () => {
                 docs.push({ ...doc.data(), id: doc.id });
             });
             setProducto(docs);
-            setLoading(false); // Actualizar la bandera de carga
+            setLoading(false);
         };
         getproductos();
     }, [id]);
@@ -88,7 +88,7 @@ const DetailPage = () => {
         <div className="detalle-prod">
             {producto.map((prod) => {
                 return (
-                    <div className="detalle-prodd" key={prod.id}>
+                    <div className="detalle-prod" key={prod.id}>
                         <CardPlayer data={prod} showDescription={true} />
 
                         <div className="cantidad-container">
