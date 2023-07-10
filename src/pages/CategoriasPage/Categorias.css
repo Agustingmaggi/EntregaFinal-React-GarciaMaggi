@@ -5,3 +5,12 @@
     margin: 25px;
     gap: 20px
 }
+
+
+.link-style {
+    text-decoration: none;
+    /* Elimina el subrayado */
+    color: inherit;
+    /* Hereda el color del texto del padre */
+    /* Agrega estilos adicionales según tus preferencias */
+}

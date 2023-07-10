@@ -35,7 +35,7 @@ const CategoriasPage = () => {
       {producto.map((prod) => {
         return (
           <div key={prod.id}>
-            <Link to={`/detail/${prod.id}`}>
+            <Link to={`/detail/${prod.id}`} className="link-style">
               <CardPlayer data={prod} />
             </Link>
           </div>

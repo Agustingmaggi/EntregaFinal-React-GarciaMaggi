@@ -74,12 +74,12 @@ const DetailPage = () => {
                         <CardPlayer data={prod} showDescription={true} />
 
                         <div className="cantidad-container">
-                            <button onClick={decrementarCantidad}>-</button>
+                            <button onClick={decrementarCantidad} className="button">-</button>
                             <span>{cantidad}</span>
-                            <button onClick={incrementarCantidad}>+</button>
+                            <button onClick={incrementarCantidad} className="button">+</button>
                             <button
                                 onClick={() => agregarAlCarrito()}
-                                className={carritoClicked ? "button-clicked" : ""}
+                                className={`button ${carritoClicked ? "button-clicked" : ""}`}
                             >
                                 Agregar al carrito
                             </button>

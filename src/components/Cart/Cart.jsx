@@ -37,13 +37,14 @@ const Cart = () => {
                                     Cantidad: {item.cantidad}
                                 </p>
                                 <p>Precio Total: {item.cantidad * item.precio}</p>
-                                <button onClick={() => removeFromCart(item.nombre)}>Quitar del carrito</button>
+                                <button onClick={() => removeFromCart(item.nombre)}
+                                    className="remove-from-cart">Quitar del carrito</button>
                             </div>
                         </div>
                     ))}
                     <p className="cart-total">Precio Total del Carrito: $ {totalPrice}</p>
                     <Link to="/shop">
-                        <button>Finalizar Compra</button>
+                        <button className="finish-purchase">Finalizar Compra</button>
                     </Link>
                 </>
             ) : (

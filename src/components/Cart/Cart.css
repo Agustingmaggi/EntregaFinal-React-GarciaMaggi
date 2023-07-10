@@ -39,26 +39,20 @@
     text-align: right;
 }
 
-.cart-actions {
-    text-align: right;
-    margin-top: 20px;
-}
-
-.cart-actions button {
-    padding: 10px 20px;
-    background-color: #f50057;
+.cart-item-details button.remove-from-cart {
+    background-color: red;
     color: white;
     border: none;
     cursor: pointer;
     font-weight: bold;
+    padding: 5px 20px;
 }
 
-.cart-actions button:hover {
-    background-color: #c51162;
-}
-
-.cart-empty {
-    text-align: center;
-    margin-top: 20px;
-    font-style: italic;
+.finish-purchase {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
 }

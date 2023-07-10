@@ -1,0 +1,4 @@
+.boton.pressed {
+    transform: translateY(2px);
+    transition: transform 0.01s ease;
+}

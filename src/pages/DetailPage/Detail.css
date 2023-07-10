@@ -6,6 +6,23 @@
     margin-top: 20px;
 }
 
-.button-clicked {
-    background-color: lightgray;
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+.button:active {
+    background-color: #3e8e41;
+    transform: translateY(1px);
 }
