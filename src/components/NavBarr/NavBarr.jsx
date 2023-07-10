@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom';
 import Menu from '../MenuNavBar/MenuNavBar.jsx';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useContext } from "react"
+import { ProductosContext } from "../../context/ProductosContext.jsx"
 
 const NavBar = () => {
+    const [items] = useContext(ProductosContext)
+
     return (
         <>
             <nav style={{ backgroundColor: 'green', padding: '10px', width: '100%', position: 'fixed', top: 0, zIndex: 999 }}>
@@ -15,7 +19,10 @@ const NavBar = () => {
                         <li><Link style={{ textDecoration: 'none', color: 'white' }} to="/about">About</Link></li>
                         <li><Link style={{ textDecoration: 'none', color: 'white' }} to="/contact">Contact</Link></li>
                     </ul>
-                    <Link style={{ textDecoration: 'none', color: 'white' }} to="/shop">< ShoppingCartIcon /></Link>
+                    <Link style={{ textDecoration: 'none', color: 'white' }} to="/cart">
+                        < ShoppingCartIcon />
+                        {items.length}
+                    </Link>
                 </div>
             </nav >
             <div style={{ marginTop: '60px' }}>
